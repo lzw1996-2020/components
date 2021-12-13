@@ -1,14 +1,14 @@
 export default class Draw {
-    constructor(canvasId, config = {}) {
+    constructor(canvasId, config = {}, degree) {
+        this.degree = degree
         this.canvasId = canvasId;
         this.canvas = document.getElementById(this.canvasId);
 
         let style = window.getComputedStyle(this.canvas, null)
         config.width = style.width.replace('px', '')
         config.height = style.height.replace('px', '')
-        const { width = 300, height = 200 } = config
+        let { width = 300, height = 200 } = config
         this.config = config
-
         this.ctx = this.canvas.getContext("2d");
         const devicePixelRatio = window.devicePixelRatio
         if (devicePixelRatio) {
@@ -30,6 +30,7 @@ export default class Draw {
     }
     init() {
         this.drawText()
+        this.rotateCanvas(this.degree)
         let that = this;
         let { canvas, ctx, config = {} } = this
         const { line = 2, lineColor = "black" } = config
@@ -47,15 +48,26 @@ export default class Draw {
             that.drawEnd(event);
         });
     }
+    //页面旋转canvas调整
+    rotateCanvas(degree) {
+        this.ctx.rotate((-degree * Math.PI) / 180)
+        const { width, height } = this.config
+        switch (degree) {
+            case 90:
+                this.ctx.translate(-height, 0);
+                break;
+        }
+    }
     //画文案
     drawText(str) {
-        let { ctx, canvas, config, width, height } = this
-        let text = config.text || str
+        let { ctx, config } = this
+        let { width, height } = config
+        let text = str || "点击签名"
         if (!text) {
             return;
         }
         ctx.font = "30px Arial";
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = "black";
         ctx.textBaseline = "middle";//设置字体垂直居中
         ctx.textAlign = 'center';//设置字体水平居中
         let textSize = ctx.measureText(text).width
@@ -151,7 +163,7 @@ export default class Draw {
         this.ctx.closePath()
     }
     clear(ctx = this.ctx) {
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.clearRect(0, 0, this.width, this.height);
     }
     save(canvas = this.canvas) {
         if (this.isClick) {

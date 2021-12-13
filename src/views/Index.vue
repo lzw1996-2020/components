@@ -2,17 +2,15 @@
  * @Description: 
  * @Author: zhongwei.liang
  * @Date: 2021-11-23 15:09:05
- * @LastEditTime: 2021-12-08 15:01:10
+ * @LastEditTime: 2021-12-13 18:08:18
  * @LastEditors: zhongwei.liang
  * @Reference: 
 -->
 <template>
   <div>
     <!-- <sign @onReset="reset" @onConfirm="confirm" :config="config"></sign> -->
-    <!-- <AutoSign ref="sign" :config="config" :autoStyle="className"></AutoSign>
-    <button @click="reset">调用</button> -->
-
-    <autoSign :config="config"></autoSign>
+    <AutoSign v-model="imgUrl" :config="config"></AutoSign>
+    <!-- <button @click="onClick" style="height:20vh">点击</button> -->
   </div>
 </template>
 
@@ -30,22 +28,20 @@ export default {
   data() {
     return {
       config: {
-        text: '点击签字',
-        line: 4,
-        lineColor: 'black',
+        title: '默认标题',
+        line: 4,//画笔粗细
+        lineColor: 'black',//画笔颜色
+        exportWidth: 100,//导出图片宽度
+        exportHeight: 300,//导出图片高度
+        isRotate: false,//是否横屏展示
       },
-      className: {},
+      imgUrl: "",
     };
   },
   methods: {
-    reset() {
-      this.$refs.sign.onSave((res) => {
-        console.log(res);
-      })
-    },
-    confirm(res) {
-      console.log(res);
-    },
+    onClick() {
+      console.log(this.imgUrl);
+    }
   },
 };
 </script>
