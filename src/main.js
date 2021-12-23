@@ -6,9 +6,9 @@ import store from './store'
 // import 'lzwtest01/style/testComponent.css'
 // Vue.use(Test)
 
-import Sign from "lzw_components_sign"
+import AutoSign from "lzw_components_sign"
 import "lzw_components_sign/style/sign.css"
-Vue.use(Sign)
+Vue.use(AutoSign)
 
 Vue.config.productionTip = false
 

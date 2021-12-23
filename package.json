@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "lzw_components_sign": "^1.1.1",
+    "lzw_components_sign": "^1.1.3",
     "lzwtest01": "^1.0.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

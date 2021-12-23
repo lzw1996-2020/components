@@ -2,13 +2,13 @@
  * @Description: 
  * @Author: zhongwei.liang
  * @Date: 2021-12-06 13:59:37
- * @LastEditTime: 2021-12-13 18:09:29
+ * @LastEditTime: 2021-12-23 18:50:57
  * @LastEditors: zhongwei.liang
  * @Reference: 
 -->
 <template>
     <div class="signBox" :style="getHorizontalStyle">
-        <div class="title">{{ config.title }}</div>
+        <div class="title" v-show="config.title">{{ config.title || '标题' }}</div>
         <div class="signContent">
             <canvas id="myCanvas"></canvas>
         </div>
@@ -25,7 +25,15 @@ export default {
     name: 'autoSign',
     props: {
         config: {
-            type: Object
+            type: Object,
+            default: function() {
+                return {
+                    title: '默认标题',
+                    line: 4,//画笔粗细
+                    lineColor: 'black',//画笔颜色
+                    isRotate: false,//是否横屏展示
+                }
+            }
         }
     },
     data() {
@@ -48,7 +56,6 @@ export default {
             window.addEventListener(
                 "orientationchange",
                 function () {
-                    console.log(window.orientation);
                     setTimeout(function () {
                         location.reload();
                     }, 0);
@@ -67,13 +74,6 @@ export default {
             console.log(img);
             this.$emit("input", img)
         },
-        // onSave(callBack, degree, width, height) {
-        //     let canvas = this.draw.scale(width, height)
-        //     let oldImg = this.draw.save(canvas)
-        //     this.draw.rotate(degree, oldImg, canvas, (res) => {
-        //         callBack(res);
-        //     })
-        // },
     },
     mounted() {
         this.createCanvas()
